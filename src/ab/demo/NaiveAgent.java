@@ -36,7 +36,6 @@ public class NaiveAgent implements Runnable {
 	TrajectoryPlanner tp;
 	private boolean firstShot;
 	private Point prevTarget;
-	int count=0;
 	// a standalone implementation of the Naive Agent
 	public NaiveAgent() {
 		
@@ -56,7 +55,7 @@ public class NaiveAgent implements Runnable {
 
     //    System.out.println(currentLevel+" currentlevel");
 		aRobot.loadLevel(currentLevel);
-		while (count<8) {
+		while (true) {
 
 			GameState state = solve();
 			if (state == GameState.WON) {
@@ -81,7 +80,6 @@ public class NaiveAgent implements Runnable {
 							+ " Score: " + scores.get(key) + " ");
 				}
 				System.out.println("Total Score: " + totalScore);
-                count++;
                 aRobot.loadLevel(++currentLevel);
 				// make a new trajectory planner whenever a new level is entered
 				tp = new TrajectoryPlanner();
@@ -111,7 +109,6 @@ public class NaiveAgent implements Runnable {
 			}
 
 		}
-        System.out.println("8 levels are completed");
 
 	}
 
@@ -173,8 +170,10 @@ public class NaiveAgent implements Runnable {
 
 		// if there is a sling, then play, otherwise just skip.
 		if (sling != null) {
+            BlocksDetails bd=new BlocksDetails();
+            bd.Structure();
 
-			if (!pigs.isEmpty()) {
+            if (!pigs.isEmpty()) {
 
                 double min=pigs.get(0).getY();
                 int minid=0;
